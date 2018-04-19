@@ -48,6 +48,11 @@ public class SSOClientFilter implements Filter {
 			Map<String,String> params = new HashMap<String,String>();
 			//把客户端地址栏添加到的token信息传递给统一认证中心进行校验
 			params.put("token", token);
+			/**-------------------------阶段四添加的代码start---------------------------------**/
+			//获取客户端的完整登出地址 http://www.crm.com:8088/logOut
+			params.put("clientUrl", SSOClientUtil.getClientLogOutUrl());
+			params.put("jsessionid", session.getId());
+			/**-------------------------阶段四添加的代码end---------------------------------**/
 			try {
 				String isVerify = HttpUtil.sendHttpRequest(httpURL, params);
 				if("true".equals(isVerify)){
